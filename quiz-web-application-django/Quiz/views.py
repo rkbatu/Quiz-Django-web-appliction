@@ -22,6 +22,7 @@ def home(request):
         wrong=0
         correct=0
         total=0
+        varr=1
         for q in questions:
             total+=1
             c=1
@@ -34,8 +35,8 @@ def home(request):
                 correct+=1
             else:
                 wrong+=1
-        percent = score/(total*10) *100
-        en=ResultModel(user=request.user,score=score)           #new code
+        percent = score/(total*10) *100    
+        en=ResultModel(user=request.user,score=score)                  #new code
         en.save()
         context = {
             'score':score,
@@ -43,7 +44,8 @@ def home(request):
             'correct':correct,
             'wrong':wrong,
             'percent':percent,
-            'total':total
+            'total':total,
+            'varr':varr
         }
         return render(request,'Quiz/result.html',context)
         

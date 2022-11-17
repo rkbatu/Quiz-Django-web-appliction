@@ -149,3 +149,9 @@ p {
 h5 {
     text-align: center;
 }
+
+
+.sticky {
+  position: sticky;
+  top: 0;
+}

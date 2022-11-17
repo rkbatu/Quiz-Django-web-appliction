@@ -1,0 +1,131 @@
+
+{% extends 'Quiz/dependencies.html' %}
+
+{% block content %}
+{% load static %}
+
+
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">  {% endcomment %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main_style.css'%}"> 
+<div class="container ">
+<h1>Quiz</h1>
+
+<!-- <div align="right " id="countdown"></div> -->
+
+ <form method='post' action="{% url 'home' %}">
+    {% csrf_token %}
+    {% for q  in questions%}
+
+{% comment %} Question  {% endcomment %}
+
+        <div class="form-group">
+        <label for="question">{{ forloop.counter }}. {{q.question|linebreaksbr}}</label>
+    
+
+    <div class="form-check quest">    
+
+        <div class="color">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.question}}" id="gridRadios1" value="option1" >
+                <label class="form-check-label"> {{q.op1}} </label>
+            </div>
+        </div>
+        <div class="color">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.question}}" id="gridRadios2" value="option2" >
+                <label class="form-check-label"> {{q.op2}} </label>
+            </div>
+        </div>
+        <div class="color">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{q.question}}" id="gridRadios3" value="option3" >
+                <label class="form-check-label"> {{q.op3}} </label>
+            </div>
+        </div>
+        <div class="color">
+            <div class="form-check"> 
+                <input class="form-check-input" type="radio" name="{{q.question}}" id="gridRadios4" value="option4">
+                <label class="form-check-label"> {{q.op4}} </label>
+            </div>
+        </div>
+        <hr>
+        
+    </div>    
+</div>
+    {% endfor %}
+   
+
+
+    <!-- <input id='timer' type='hidden' name="timer" value=""> -->
+    <br>
+    <button type="submit" id="button" class="btn btn-primary" style="vertical-align:middle"><span>Submit </span></button>
+ 
+    
+</form>
+    {% block script %}
+        {% comment %} <script>
+
+            console.log('hello world')
+            const timer=document.getElementById('displaytimer')
+            console.log(timer.textContent)
+            const inputtag = document.getElementById('timer')
+
+            t=900
+            setInterval(()=>{
+                t-=1
+                timer.innerHTML ="<b>Timer: " +t+" seconds</b>"
+                inputtag.value = t
+            },1000)
+        </script>  {% endcomment %}
+
+
+
+        <!-- <script>
+            
+            var time = 30 * 60;
+
+
+            const countdownEle = document.getElementById('countdown');
+
+            var interval = setInterval(updateCountdown, 1000);
+            
+
+            function updateCountdown() {
+                var minutes = Math.floor(time / 60);
+                var seconds = time % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                
+
+                countdownEle.innerHTML = `${minutes}:${seconds}`;
+                time--;
+                
+                if(time == 0) {
+                    clearInterval(interval);
+
+                    alert("Time out");
+                    
+                    // window.location.href = "/Quiz/templates/Quiz/submit.html";
+                }
+            }
+         -->
+        <script>
+    
+    function preventBack(){
+            window.history.forward();
+
+        }
+        setTimeout("preventBack()",0);
+        window.onunload= function() {null};
+
+
+        window.onbeforeunload = function () {
+            var text = "Are you sure you want to leave ?"
+            return(text);
+        }
+        </script>
+
+    {% endblock script %}
+
+</div>
+{% endblock %}
+ 

@@ -1,0 +1,91 @@
+{% load static %}
+
+
+<style>
+  .greet{
+    font-size: 18px;
+    color: #fff;
+    margin-right: 20px;
+  }
+
+  #countdown {
+    color: white;
+    text-align:center;
+
+  }
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+
+    <ul class="navbar-nav">
+      
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}">Home</a>
+      </li>
+      </li>
+      <li class="nav-item active">
+        
+      {% if request.user.is_staff %}
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'addQuestion' %}">Add Question</a>
+      </li>
+      
+
+      </li>
+      
+      
+      
+    
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}">Login</a>
+      </li>
+      {% endif %}
+      <li>
+        <h2 id="countdown"></h2>
+      </li>
+
+    </ul>
+  </div>
+
+ 
+
+  <span class="greet">Hello, {{request.user}}</span>
+  <span ><a  class="greet" href="{% url 'logout' %}">Logout</a></span>
+
+</nav>
+
+{% if request.user.is_authenticated %}
+<script>
+    var time = 30 * 60;
+
+
+const countdownEle = document.getElementById('countdown');
+
+var interval = setInterval(updateCountdown, 1000);
+
+
+function updateCountdown() {
+    var minutes = Math.floor(time / 60);
+    var seconds = time % 60;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    
+
+    countdownEle.innerHTML = `${minutes}:${seconds}`;
+    time--;
+    
+    if(time == 0) {
+        clearInterval(interval);
+
+        alert("Time out");
+        
+        // window.location.href = "/Quiz/templates/Quiz/submit.html";
+    }
+}
+</script>
+{% endif %}
